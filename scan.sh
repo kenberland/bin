@@ -1,5 +1,5 @@
 #!/bin/bash
-
+HOST=hero.net
 read -p "Would you like to add a reference name: " LINK_NAME
 TEMPDIR=/tmp/$$
 FILENAME=$(date +%Y-%m-%d_%H:%M:%S)
@@ -14,8 +14,8 @@ FIRST_PADDED=$(printf "%06d" $FIRST)
 
 echo "1) Double-sided letter"
 echo "2) Single-sided letter"
-echo "3) Single-sided legal"
-echo "4) Double-sided legal"
+echo "3) Double-sided legal"
+echo "4) Single-sided legal"
 
 while true; do
     read -p "Choose (1-4)?" type
@@ -28,11 +28,11 @@ while true; do
 	    echo "scanning: single;letter;200dpi" && scanimage --resolution=200 --format=tiff -b # single sided letter
 	    break
 	    ;;
-	3*)
+	4*)
 	    echo "scanning: single;legal;200dpi"  && scanimage --resolution=200 --page-height=355 --format=tiff -b # single sided legal
 	    break
 	    ;;
-	4*)
+	3*)
 	    echo "scanning: duplex;legal;200dpi"  && scanimage --source "ADF Duplex" --resolution=200 --page-height=355 --format=tiff -b # double sided legal
 	    break
 	    ;;
@@ -70,6 +70,6 @@ rm $LINK_NAME.??????.tif.pdf
 
 find $HOME/scans/ -maxdepth 1 -type f -name highwater\* -exec rm {} \;
 touch $HOME/scans/highwater-$LAST
-/usr/bin/rsync -vzax --delete $HOME/scans/ hero.com:scans/
+/usr/bin/rsync -vzax --delete $HOME/scans/ $HOST:scans/
 
 
