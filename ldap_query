@@ -1,0 +1,18 @@
+#!/bin/bash
+set -x
+match_string="(&"
+if [ $# -eq 2 ]
+then
+    match_string+="(givenname=$1)(sn=$2)"
+elif [ $# -eq 1 ]
+then
+    match_string+="(|(uid=$1)(sn=$1*)(givenname=$1*))"
+else
+    echo "Usage: mutt_query_ldap [first name] | [last name] | [first name] [last name] | [username]"
+    exit 1
+fi
+
+match_string+="(objectclass=amznPerson))"
+echo match_string $match_string
+echo "Results:"
+ldapsearch -x -t -LLL -z 25 -h ldap.amazon.com -b o=amazon.com $match_string mail 2>/dev/null | grep mail: | sed -e 's/mail: //'
