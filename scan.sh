@@ -1,6 +1,40 @@
 #!/bin/bash
+
+set -o emacs
+bind 'set show-all-if-ambiguous on'
+bind 'set completion-ignore-case on'
+
+COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
+
+#bind TAB:menu-complete
+bind 'TAB:dynamic-complete-history'
+
+THIS_YEAR=$(date +%Y)
+LAST_YEAR=$(($THIS_YEAR - 1))
+
+FILE_LIST=$(find ~/scans/ -type f \
+		 -iwholename \*$LAST_YEAR\* -and -name \*pdf \
+		 -printf '%f ' \
+		 -o \
+		 -iwholename \*$THIS_YEAR\* -and -name \*pdf \
+		 -printf '%f ' \
+	     )
+
+ALL=""
+for filename in $FILE_LIST; do
+    onedot=${filename%.*}
+    twodot=${onedot%.*}
+    ALL="$ALL $twodot"
+done
+CHOICES=$(echo $ALL | ruby -e'f = STDIN.readline; puts f.split.sort.uniq.join("\n")')
+for i in $CHOICES ; do
+    history -s $i
+done
+
+compgen -W "$urls" http://sa
+
+read -e -p "Would you like to add a reference name: " LINK_NAME
 HOST=hero.net
-read -p "Would you like to add a reference name: " LINK_NAME
 TEMPDIR=/tmp/$$
 FILENAME=$(date +%Y-%m-%d_%H:%M:%S)
 YEAR=$(date +%Y)
