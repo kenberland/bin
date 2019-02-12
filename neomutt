@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export $(gpg --use-agent -d $HOME/ma.txt.gpg)
+exec $HOME/neomutt-bin/bin/neomutt "$@"
+
