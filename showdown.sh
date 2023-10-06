@@ -1,5 +1,6 @@
 #!/bin/bash
-env >> /tmp/foo.txt
+
+env > /tmp/env.txt
 TEMPFILE="/tmp/foo.$$.md"
 while read line
 do

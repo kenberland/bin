@@ -1,0 +1,21 @@
+#!/bin/bash
+set -evx
+
+TARGET=$HOME/mail/mairix
+rm -rf $TARGET
+rm -rf $HOME/dcm/.mairix
+
+ONE_MONTH_AGO=$(date -d "- 1 month" "+%Y%m%d")
+NOW=$(date +%Y%m%d)
+
+DATE_RANGE=d:${ONE_MONTH_AGO}-${NOW}
+
+if [ "$#" != "1" ]; then
+    shift
+    CMD="mairix ${@}"
+else
+    CMD="mairix ${DATE_RANGE} ${@}"
+fi
+echo "${CMD}" | xsel -ip
+echo "command \"${CMD}\" placed on clipboard"
+$CMD
