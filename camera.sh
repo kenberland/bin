@@ -1,7 +1,7 @@
 #!/bin/bash
 set -evx
 
-DEVICE="/dev/video0"
+DEVICE="/dev/video2"
 #    v4l2-ctl -d "${DEVICE}" --set-ctrl=exposure_auto_priority=0
 #    v4l2-ctl -d "${DEVICE}" --set-ctrl=exposure_auto=3
 #    sleep 2
