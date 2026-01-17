@@ -1,0 +1,2 @@
+start with
+gpg -d ~/mken-imap-password.gpg | LD_LIBRARY_PATH=/home/ken/hero_backup_exclude/ssl-1.1.1k/lib ./remove-old-mail.py

@@ -1,6 +1,8 @@
 #!/bin/bash
 set -evx
 
+# see all incremental backups with:
+# duplicity collection-status pexpect+scp://hero.net/scans-encrypted-2024
 # tested restore with
 # duplicity restore pexpect+scp://hero.net/scans-encrypted-pre-2024 ./
 # or
