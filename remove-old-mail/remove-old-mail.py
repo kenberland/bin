@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from datetime import datetime, timedelta
 import os
 import re
@@ -37,9 +37,11 @@ def run_once():
     logger.debug("%d messages " % len(messages))
     for msgid, data in server.fetch(messages, ['ENVELOPE']).items():
         envelope = data[b'ENVELOPE']
-        logger.debug(f"removing #{envelope.date.isoformat()} #{msgid}, {envelope.subject.decode()}")
+        subject = envelope.subject.decode() if envelope.subject else ''
+        logger.debug(f"removing #{envelope.date.isoformat()} #{msgid}, {subject}")
         server.uid_expunge(msgid)
     server.logout()
+    logger.debug("end run_once()")
 
 def loop():
     while True:
@@ -49,7 +51,7 @@ def loop():
 
 daemon = Daemonize(app="remove-old-mail.py", pid=pid, action=loop, keep_fds=keep_fds)
 daemon.start()
-#run_once()
+run_once()
 
 
 

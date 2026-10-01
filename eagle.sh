@@ -17,7 +17,7 @@ curlit "$BASE/xmltv.php?username=$USER&password=$PASS&type=m3u_plus&output=mpegt
 cp /tmp/output epg.$NOW.xml
 rm -f eagle.xml eagle.m3u
 ln -s eagle.$NOW.m3u eagle.m3u
-ln -s epg.$NOW.xml eagle.xml
+parse_epg.py --in epg.$NOW.xml --out eagle.xml --langs "US,FR,GB"
 
 
 

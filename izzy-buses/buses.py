@@ -37,6 +37,7 @@ params = {
 }
 
 response = requests.get(url, params=params)
+
 if response.ok:
     data = response.json()
     predictions = data.get("bustime-response", {}).get("prd", [])
