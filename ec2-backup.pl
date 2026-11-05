@@ -104,8 +104,19 @@ if (!$only_bring_down) {
         SubnetId => 'subnet-f26d6885',
         SecurityGroupIds  => [
             'sg-e362f59b'
-        ]
-        );
+        ],
+        TagSpecifications => [
+            {
+                ResourceType => 'instance',
+                Tags => [
+                    {
+                        Key   => 'Purpose',
+                        Value => 'hero-backup-v02-7f31'
+                    }
+		    ]
+            }
+        ]    
+	);
 
     if ( @{$result->Instances} == 1 && length($result->Instances->[0]->InstanceId) == 19 ){
 	$instance = $result->Instances->[0]->InstanceId;
